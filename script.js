@@ -2,6 +2,8 @@ const sketchpad = document.querySelector("#sketchpad");
 const btns = document.querySelectorAll("button");
 const toggle = document.querySelector(".toggle");
 const gridBtn = document.querySelector("#grid-btn");
+const slider = document.querySelector("#slider");
+const gridSize = document.querySelector("#size");
 let pixels = null;
 let isMouseDown = false;
 
@@ -13,6 +15,9 @@ function createGrid(num = 16) {
     const pixel = document.createElement("div");
     let basis = 500 / num;
     pixel.classList.add("pixel");
+    if (gridBtn.classList.contains("enabled")) {
+      pixel.style.border = "1px solid grey";
+    }
     pixel.style.flexBasis = `${basis}px`;
     sketchpad.appendChild(pixel);
   }
@@ -31,7 +36,7 @@ btns.forEach((btn) => {
   });
 });
 
-document.addEventListener("mousedown", (e) => {
+sketchpad.addEventListener("mousedown", (e) => {
   isMouseDown = true;
   e.preventDefault();
 });
@@ -51,7 +56,14 @@ gridBtn.addEventListener("click", () => {
 // Using event delegation instead of event for every pixel
 sketchpad.addEventListener("mouseover", (e) => {
   const targetPixel = e.target;
+  console.log(isMouseDown);
   if (isMouseDown) {
     targetPixel.style.backgroundColor = "black";
   }
+});
+
+slider.addEventListener("input", (e) => {
+  const newSize = e.target.value;
+  createGrid(newSize);
+  gridSize.textContent = `${newSize} x ${newSize}`;
 });

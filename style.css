@@ -16,6 +16,7 @@ h1 {
 .container {
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 60px;
 }
 
@@ -28,7 +29,6 @@ h1 {
 }
 
 .pixel {
-  border: 1px solid grey;
   box-sizing: border-box;
   background-color: white;
 }
@@ -36,16 +36,51 @@ h1 {
 #toolbox {
   flex-direction: column;
   align-items: center;
+  gap: 20px;
   width: 250px;
   height: 400px;
+  font-family: "Times New Roman", serif;
+  font-size: 20px;
   background-color: rgb(95, 116, 112);
   border-radius: 10px;
   filter: drop-shadow(0px 0px 7px rgba(1, 1, 1, 0.8));
 }
 
+#size-cont {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#size-cont .text {
+  color: rgb(227, 218, 182);
+  font-size: 25px;
+  margin-bottom: 0;
+}
+
+#slider {
+  padding: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: rgb(227, 218, 182);
+  height: 0.5rem;
+  width: 200px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 2vh;
+  height: 2vh;
+  background-color: rgb(245, 203, 92);
+  border-radius: 60%;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
 button {
-  font-family: "Times New Roman", serif;
-  font-size: 20px;
+  font: inherit;
   background-color: rgb(95, 116, 112);
   width: 200px;
   padding: 10px 20px;
@@ -55,7 +90,8 @@ button {
   cursor: pointer;
 }
 
-button:active {
+button:active,
+input:active {
   transform: translateY(2px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) inset;
   background-color: rgb(75, 105, 99);
