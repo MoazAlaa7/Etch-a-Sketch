@@ -1,11 +1,11 @@
 const sketchpad = document.querySelector("#sketchpad");
-const btns = document.querySelectorAll("button");
-const toggle = document.querySelector(".toggle");
-const gridBtn = document.querySelector("#grid-btn");
-const slider = document.querySelector("#slider");
 const gridSize = document.querySelector("#size");
+const slider = document.querySelector("#slider");
+const gridBtn = document.querySelector("#grid-btn");
+const eraserBtn = document.querySelector("#eraser-btn");
 let pixels = null;
 let isMouseDown = false;
+let eraserEnabled = false;
 
 createGrid();
 
@@ -24,16 +24,38 @@ function createGrid(num = 16) {
   pixels = document.querySelectorAll(".pixel");
 }
 
-btns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    if (toggle.textContent === "OFF") {
-      btn.classList.add("enabled");
-      toggle.textContent = "ON";
-    } else {
-      btn.classList.remove("enabled");
-      toggle.textContent = "OFF";
-    }
-  });
+gridBtn.addEventListener("click", () => {
+  if (gridBtn.textContent === "Grid: OFF") {
+    gridBtn.classList.add("enabled");
+    gridBtn.textContent = "Grid: ON";
+  } else {
+    gridBtn.classList.remove("enabled");
+    gridBtn.textContent = "Grid: OFF";
+  }
+});
+
+gridBtn.addEventListener("click", () => {
+  if (gridBtn.textContent === "Grid: OFF") {
+    pixels.forEach((pixel) => {
+      pixel.style.border = "none";
+    });
+  } else {
+    pixels.forEach((pixel) => {
+      pixel.style.border = "1px solid grey";
+    });
+  }
+});
+
+eraserBtn.addEventListener("click", () => {
+  if (eraserBtn.textContent === "Eraser: OFF") {
+    eraserBtn.classList.add("enabled");
+    eraserBtn.textContent = "Eraser: ON";
+    eraserEnabled = true;
+  } else {
+    eraserBtn.classList.remove("enabled");
+    eraserBtn.textContent = "Eraser: OFF";
+    eraserEnabled = false;
+  }
 });
 
 sketchpad.addEventListener("mousedown", (e) => {
@@ -45,20 +67,13 @@ document.addEventListener("mouseup", () => {
   isMouseDown = false;
 });
 
-gridBtn.addEventListener("click", () => {
-  pixels.forEach((pixel) => {
-    toggle.textContent === "OFF"
-      ? (pixel.style.border = "none")
-      : (pixel.style.border = "1px solid grey");
-  });
-});
-
-// Using event delegation instead of event for every pixel
+// Using event delegation instead of an event for every pixel
 sketchpad.addEventListener("mouseover", (e) => {
   const targetPixel = e.target;
-  console.log(isMouseDown);
   if (isMouseDown) {
-    targetPixel.style.backgroundColor = "black";
+    eraserEnabled
+      ? (targetPixel.style.backgroundColor = "white")
+      : (targetPixel.style.backgroundColor = "black");
   }
 });
 
