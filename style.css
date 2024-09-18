@@ -85,7 +85,8 @@ button {
   width: 200px;
   padding: 10px 20px;
   margin: 10px 0;
-  border: solid 2px rgba(0, 0, 0);
+  color: rgb(227, 218, 182);
+  border: 2px solid rgb(227, 218, 182);
   border-radius: 5px;
   cursor: pointer;
 }
@@ -95,6 +96,12 @@ input:active {
   transform: translateY(2px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) inset;
   background-color: rgb(75, 105, 99);
+}
+
+#clear-btn:active {
+  background-color: rgb(75, 105, 99);
+  color: red;
+  border-color: red;
 }
 
 .enabled {

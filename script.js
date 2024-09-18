@@ -3,6 +3,7 @@ const gridSize = document.querySelector("#size");
 const slider = document.querySelector("#slider");
 const gridBtn = document.querySelector("#grid-btn");
 const eraserBtn = document.querySelector("#eraser-btn");
+const clearBtn = document.querySelector("#clear-btn");
 let pixels = null;
 let isMouseDown = false;
 let eraserEnabled = false;
@@ -56,6 +57,12 @@ eraserBtn.addEventListener("click", () => {
     eraserBtn.textContent = "Eraser: OFF";
     eraserEnabled = false;
   }
+});
+
+clearBtn.addEventListener("click", () => {
+  pixels.forEach((pixel) => {
+    pixel.style.backgroundColor = "white";
+  });
 });
 
 sketchpad.addEventListener("mousedown", (e) => {
