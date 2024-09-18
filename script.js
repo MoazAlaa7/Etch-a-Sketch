@@ -4,6 +4,8 @@ const slider = document.querySelector("#slider");
 const gridBtn = document.querySelector("#grid-btn");
 const eraserBtn = document.querySelector("#eraser-btn");
 const clearBtn = document.querySelector("#clear-btn");
+let colorPicker = document.querySelector("#color-picker");
+let color = document.querySelector("#color-picker").value;
 let pixels = null;
 let isMouseDown = false;
 let eraserEnabled = false;
@@ -80,7 +82,7 @@ sketchpad.addEventListener("mouseover", (e) => {
   if (isMouseDown) {
     eraserEnabled
       ? (targetPixel.style.backgroundColor = "white")
-      : (targetPixel.style.backgroundColor = "black");
+      : (targetPixel.style.backgroundColor = color);
   }
 });
 
@@ -88,4 +90,8 @@ slider.addEventListener("input", (e) => {
   const newSize = e.target.value;
   createGrid(newSize);
   gridSize.textContent = `${newSize} x ${newSize}`;
+});
+
+colorPicker.addEventListener("change", (e) => {
+  color = e.target.value;
 });

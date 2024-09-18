@@ -79,6 +79,22 @@ h1 {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
+#color-cont {
+  color: rgb(227, 218, 182);
+  margin: 10px 0;
+  font-size: 25px;
+}
+
+#color-picker {
+  cursor: pointer;
+  background-color: rgb(227, 218, 182);
+  width: 100px;
+}
+
+#color-picker:active {
+  background-color: rgb(245, 203, 92);
+}
+
 button {
   font: inherit;
   background-color: rgb(95, 116, 112);
