@@ -4,11 +4,13 @@ const slider = document.querySelector("#slider");
 const gridBtn = document.querySelector("#grid-btn");
 const eraserBtn = document.querySelector("#eraser-btn");
 const clearBtn = document.querySelector("#clear-btn");
+const rainbowBtn = document.querySelector("#rainbow-btn");
 let colorPicker = document.querySelector("#color-picker");
 let color = document.querySelector("#color-picker").value;
 let pixels = null;
 let isMouseDown = false;
-let eraserEnabled = false;
+let isEraserEnabled = false;
+let isRainbowEnabled = false;
 
 createGrid();
 
@@ -49,15 +51,27 @@ gridBtn.addEventListener("click", () => {
   }
 });
 
+rainbowBtn.addEventListener("click", () => {
+  if (rainbowBtn.textContent === "Rainbow: OFF") {
+    rainbowBtn.classList.add("enabled");
+    rainbowBtn.textContent = "Rainbow: ON";
+    isRainbowEnabled = true;
+  } else {
+    rainbowBtn.classList.remove("enabled");
+    rainbowBtn.textContent = "Rainbow: OFF";
+    isRainbowEnabled = false;
+  }
+});
+
 eraserBtn.addEventListener("click", () => {
   if (eraserBtn.textContent === "Eraser: OFF") {
     eraserBtn.classList.add("enabled");
     eraserBtn.textContent = "Eraser: ON";
-    eraserEnabled = true;
+    isEraserEnabled = true;
   } else {
     eraserBtn.classList.remove("enabled");
     eraserBtn.textContent = "Eraser: OFF";
-    eraserEnabled = false;
+    isEraserEnabled = false;
   }
 });
 
@@ -80,9 +94,10 @@ document.addEventListener("mouseup", () => {
 sketchpad.addEventListener("mouseover", (e) => {
   const targetPixel = e.target;
   if (isMouseDown) {
-    eraserEnabled
-      ? (targetPixel.style.backgroundColor = "white")
-      : (targetPixel.style.backgroundColor = color);
+    if (isEraserEnabled) targetPixel.style.backgroundColor = "white";
+    else if (isRainbowEnabled)
+      targetPixel.style.backgroundColor = generateRandomColor();
+    else targetPixel.style.backgroundColor = color;
   }
 });
 
@@ -95,3 +110,15 @@ slider.addEventListener("input", (e) => {
 colorPicker.addEventListener("change", (e) => {
   color = e.target.value;
 });
+
+function generateRandomColor() {
+  const hexChars = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
+
+  let hexColor = "#";
+  for (let i = 0; i < 6; i++) {
+    const randomPosition = Math.floor(Math.random() * 16);
+    hexColor += hexChars[randomPosition];
+  }
+
+  return hexColor;
+}
