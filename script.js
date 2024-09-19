@@ -98,11 +98,24 @@ document.addEventListener("touchend", () => {
 });
 
 // Using event delegation instead of an event for every pixel
-sketchpad.addEventListener("mouseover", draw);
-sketchpad.addEventListener("touchmove", draw);
-function draw(e) {
-  e.preventDefault();
+sketchpad.addEventListener("mouseover", drawWithMouse);
+sketchpad.addEventListener("touchmove", drawWithTouch);
+function drawWithMouse(e) {
   const targetPixel = e.target;
+  if (isMouseDown) {
+    if (isEraserEnabled) targetPixel.style.backgroundColor = "white";
+    else if (isRainbowEnabled)
+      targetPixel.style.backgroundColor = generateRandomColor();
+    else targetPixel.style.backgroundColor = color;
+  }
+}
+function drawWithTouch(e) {
+  e.preventDefault();
+  // Get the current touch position
+  const touch = e.touches[0];
+  // Get the target pixel(div) based on position coordinates
+  const targetPixel = document.elementFromPoint(touch.clientX, touch.clientY);
+
   if (isMouseDown) {
     if (isEraserEnabled) targetPixel.style.backgroundColor = "white";
     else if (isRainbowEnabled)
