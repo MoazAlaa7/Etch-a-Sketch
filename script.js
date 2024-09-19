@@ -85,13 +85,23 @@ sketchpad.addEventListener("mousedown", (e) => {
   isMouseDown = true;
   e.preventDefault();
 });
+sketchpad.addEventListener("touchstart", (e) => {
+  isMouseDown = true;
+  e.preventDefault();
+});
 
 document.addEventListener("mouseup", () => {
   isMouseDown = false;
 });
+document.addEventListener("touchend", () => {
+  isMouseDown = false;
+});
 
 // Using event delegation instead of an event for every pixel
-sketchpad.addEventListener("mouseover", (e) => {
+sketchpad.addEventListener("mouseover", draw);
+sketchpad.addEventListener("touchmove", draw);
+function draw(e) {
+  e.preventDefault();
   const targetPixel = e.target;
   if (isMouseDown) {
     if (isEraserEnabled) targetPixel.style.backgroundColor = "white";
@@ -99,7 +109,7 @@ sketchpad.addEventListener("mouseover", (e) => {
       targetPixel.style.backgroundColor = generateRandomColor();
     else targetPixel.style.backgroundColor = color;
   }
-});
+}
 
 slider.addEventListener("input", (e) => {
   const newSize = e.target.value;
